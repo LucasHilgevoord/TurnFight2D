@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,15 +6,18 @@ using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour
 {
-    private float _startY = 0;
     private bool _isEnabled = true;
+    private float _startY = 0;
 
     [Header("Panel components")]
     [SerializeField] private RectTransform _panel;
-    [SerializeField] private float _disabledAlpha = 0.75f;
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Image _backImage;
     [SerializeField] private Image _charImage;
+
+    [Header("Icons")]
+    [SerializeField] private CanvasGroup _shieldIcon;
+    [SerializeField] private CanvasGroup _specialIcon;
 
     [Header("Character")]
     private bool _infoVisible;
@@ -47,6 +51,7 @@ public class PlayerPanel : MonoBehaviour
 
     private void EnablePanel()
     {
+        _isEnabled = true;
         _canvasGroup.interactable = true;
 
         // Reset the colors
@@ -82,8 +87,17 @@ public class PlayerPanel : MonoBehaviour
     /// </summary>
     public void OnDrag() 
     {
-        _onDrag = true;
+        // Enable the icons so we can show them if the user is dragging the panel
+        if (!_onDrag)
+        {
+            _shieldIcon.gameObject.SetActive(true);
+            _shieldIcon.alpha = 0;
 
+            _specialIcon.gameObject.SetActive(true);
+            _specialIcon.alpha = 0;
+        }
+
+        _onDrag = true;
         // Set the start position where we started the click
         if (_dragStartPos == Vector3.zero)
             _dragStartPos = Input.mousePosition;
@@ -91,6 +105,12 @@ public class PlayerPanel : MonoBehaviour
         // Move the panel corresponding to the input position
         float mousePosY = Input.mousePosition.y - (_dragStartPos.y - _startY);
         _panel.anchoredPosition = new Vector3(0, mousePosY, 0);
+
+        // Show the correct icon based on the drag direction
+        _shieldIcon.alpha = _panel.localPosition.y / -_maxDrag;
+        _specialIcon.alpha = _panel.localPosition.y / _maxDrag;
+
+        // Clamp the panel to the maxDrag
         if (_panel.localPosition.y > _maxDrag)
         {
             _panel.anchoredPosition = new Vector3(0, _maxDrag, 0);
@@ -111,12 +131,15 @@ public class PlayerPanel : MonoBehaviour
         _onDrag = false;
         _dragStartPos = Vector2.zero;
 
+        _specialIcon.gameObject.SetActive(false);
         if (_panel.anchoredPosition.y < 0)
         {
+            _shieldIcon.alpha = 1;
             UseDefend();
         }
         else if (_panel.anchoredPosition.y > 0)
         {
+            _shieldIcon.gameObject.SetActive(false);
             UseSpecial();
         }
 
