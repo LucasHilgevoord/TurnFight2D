@@ -1,11 +1,22 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerPanel : MonoBehaviour
+public enum PlayerActions
 {
+    Attack,
+    Special,
+    Defend,
+    Info
+}
+
+public class CharacterPanel : MonoBehaviour
+{
+    public event Action<PlayerActions, CharacterPanel> ActionPerformed;
+
     private bool _isEnabled = true;
     private float _startY = 0;
 
@@ -21,6 +32,8 @@ public class PlayerPanel : MonoBehaviour
 
     [Header("Character")]
     private bool _infoVisible;
+    public Character Character => _character;
+    private Character _character;
 
     [Header("Input Actions")]
     [SerializeField] private float _maxDrag = 20;
@@ -30,27 +43,23 @@ public class PlayerPanel : MonoBehaviour
     private bool _onPointerDown;
     private float _pointDownTimer;
     [SerializeField] private float _mixHoldForInfo = 1;
-    [SerializeField] private float _maxHoldForAttack = 0.1f;
 
-    /// <summary>
-    /// Method it initialize the panel
-    /// </summary>
-    internal void SetPosition(float startY)
+    internal void Initialize(Character character, float startY)
     {
+        // Set the panel at the right height
         _startY = startY;
         _panel.anchoredPosition = new Vector3(0, _startY, 0);
+
+        // Set the character
+        _character = character;
+
+        // Set the correct sprites
+        _charImage.sprite = _character.Data.panelPortraitSprite;
+        _backImage.color = _character.Data.panelBackgroundTint;
+
+        // Set the name for the inspector
+        _panel.name = "panel_" + _character.Data.name;
     }
-
-    /// <summary>
-    /// Method to set the image cover for the panel
-    /// </summary>
-    internal void SetImageCover(Sprite spr) { _charImage.sprite = spr; }
-
-
-    /// <summary>
-    /// Method to set the background tint color
-    /// </summary>
-    internal void SetBackgroundTint(Color c) { _backImage.color = c; }
 
     private void EnablePanel()
     {
@@ -81,7 +90,7 @@ public class PlayerPanel : MonoBehaviour
         if (!_onDrag)
         {
             if (_onPointerDown && Time.time > _pointDownTimer + _mixHoldForInfo && !_infoVisible)
-                ShowCharacterInfo();
+                ToggleCharacterInfo(true);
         }
     }
 
@@ -140,12 +149,12 @@ public class PlayerPanel : MonoBehaviour
         if (_panel.anchoredPosition.y < _startY)
         {
             _shieldIcon.alpha = 1;
-            UseDefend();
+            UseAction(PlayerActions.Defend);
         }
         else if (_panel.anchoredPosition.y > _startY)
         {
             _shieldIcon.gameObject.SetActive(false);
-            UseSpecial();
+            UseAction(PlayerActions.Special);
         }
 
         // Reset position
@@ -157,9 +166,9 @@ public class PlayerPanel : MonoBehaviour
         _onPointerDown = false;
 
         if (_infoVisible)
-            HideCharacterInfo();
+            ToggleCharacterInfo(false);
         else if (_isEnabled && !_onDrag)
-            UseAttack();
+            UseAction(PlayerActions.Attack);
     }
     
     public void OnPointerDown() 
@@ -168,44 +177,19 @@ public class PlayerPanel : MonoBehaviour
         _pointDownTimer = Time.time;
     }
 
-    private void UseAttack()
+    private void UseAction(PlayerActions action)
     {
-        Debug.Log("Attack");
-
-        // TODO: Wait until action has been completed
-        EndAction();
-    }
-
-    private void UseDefend()
-    {
-        Debug.Log("Defend");
-
-        // TODO: Wait until action has been completed
-        EndAction();
-    }
-
-    private void UseSpecial()
-    {
-        Debug.Log("Special");
-
-        // TODO: Wait until action has been completed
-        EndAction();
+        ActionPerformed?.Invoke(action, this);
     }
     
-    private void EndAction()
+    internal void EndAction()
     {
         DisablePanel();
     }
 
-    private void ShowCharacterInfo()
+    private void ToggleCharacterInfo(bool show)
     {
-        Debug.Log("ShowCharacterInfo");
-        _infoVisible = true;
-    }
-
-    private void HideCharacterInfo()
-    {
-        Debug.Log("HideCharacterInfo");
-        _infoVisible = false;
+        UseAction(PlayerActions.Info);
+        _infoVisible = show;
     }
 }

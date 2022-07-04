@@ -10,9 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1f8c556f4e79bf4593bd9a0bf218fbb, type: 3}
-  m_Name: Roddo
+  m_Name: Jaketto
   m_EditorClassIdentifier: 
-  characterName: Roddo
-  elementType: 3
-  panelPortraitSprite: {fileID: 21300000, guid: 82a65d048b438084ab936357ec739fa1, type: 3}
-  panelBackgroundTint: {r: 0.3529412, g: 0.20392157, b: 0.12941177, a: 1}
+  characterName: Jaketto
+  characterDesc: 
+  damageType: 0
+  damageAmount: 0
+  maxHealth: 1000
+  specialAbility: {fileID: 11400000, guid: afa4d6660d053ba42bd55fb1e913c789, type: 2}
+  panelPortraitSprite: {fileID: 21300000, guid: 4cc98fcb1ac93a34789b8f92de8de31a, type: 3}
+  panelBackgroundTint: {r: 0.7607843, g: 0.25490198, b: 1, a: 1}

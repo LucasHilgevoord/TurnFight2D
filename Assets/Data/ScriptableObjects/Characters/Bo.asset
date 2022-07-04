@@ -10,9 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1f8c556f4e79bf4593bd9a0bf218fbb, type: 3}
-  m_Name: Kizuato
+  m_Name: Bo
   m_EditorClassIdentifier: 
-  characterName: Kizuato
-  elementType: 6
-  panelPortraitSprite: {fileID: 21300000, guid: efce995d0bc39104997cfa30e1f13032, type: 3}
-  panelBackgroundTint: {r: 0.34509805, g: 0.3137255, b: 0.6666667, a: 1}
+  characterName: Bo
+  characterDesc: 
+  damageType: 0
+  damageAmount: 0
+  maxHealth: 1000
+  specialAbility: {fileID: 11400000, guid: 09fb0277f59957c418ceb3ec88449dc1, type: 2}
+  panelPortraitSprite: {fileID: 21300000, guid: 0762144917297a343bee9a682f438781, type: 3}
+  panelBackgroundTint: {r: 0.8784314, g: 0.5686275, b: 0.007843138, a: 1}
