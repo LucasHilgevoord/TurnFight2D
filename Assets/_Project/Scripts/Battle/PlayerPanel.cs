@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattlePlayerPanel : MonoBehaviour
+public class PlayerPanel : MonoBehaviour
 {
     private float _startY = 0;
     private bool _isEnabled = true;

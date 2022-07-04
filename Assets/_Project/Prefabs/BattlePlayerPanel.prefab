@@ -239,7 +239,7 @@ MonoBehaviour:
   _backImage: {fileID: 2452320920952992685}
   _charImage: {fileID: 31337151594830721}
   _maxDrag: 20
-  _mixHoldForInfo: 2
+  _mixHoldForInfo: 1
   _maxHoldForAttack: 0.1
 --- !u!1 &2745281235543529928
 GameObject:
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 08ff988d4bb779f4d8ad20b32b496a23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 82a65d048b438084ab936357ec739fa1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
