@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.95699996, g: 0.19515292, b: 0.19515292, a: 1}
+  m_Color: {r: 0.3529412, g: 0.20392159, b: 0.12941177, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 3720241896249612630}
   - component: {fileID: 1813273583843478203}
   m_Layer: 5
-  m_Name: BattlePlayerPanel
+  m_Name: battle_player_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,7 +284,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panel: {fileID: 2187619742493491195}
-  _disabledAlpha: 0.75
   _canvasGroup: {fileID: 3720241896249612630}
   _backImage: {fileID: 2452320920952992685}
   _charImage: {fileID: 31337151594830721}

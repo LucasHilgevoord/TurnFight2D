@@ -35,19 +35,22 @@ public class PlayerPanel : MonoBehaviour
     /// <summary>
     /// Method it initialize the panel
     /// </summary>
-    private void InitializePanel(Character character, float startY)
+    internal void SetPosition(float startY)
     {
         _startY = startY;
-        _panel.anchoredPosition = new Vector3(0, startY, 0);
+        _panel.anchoredPosition = new Vector3(0, _startY, 0);
     }
 
     /// <summary>
     /// Method to set the image cover for the panel
     /// </summary>
-    private void SetImageCover()
-    {
+    internal void SetImageCover(Sprite spr) { _charImage.sprite = spr; }
 
-    }
+
+    /// <summary>
+    /// Method to set the background tint color
+    /// </summary>
+    internal void SetBackgroundTint(Color c) { _backImage.color = c; }
 
     private void EnablePanel()
     {
@@ -87,6 +90,8 @@ public class PlayerPanel : MonoBehaviour
     /// </summary>
     public void OnDrag() 
     {
+        if (!_isEnabled) return;
+
         // Enable the icons so we can show them if the user is dragging the panel
         if (!_onDrag)
         {
@@ -106,19 +111,19 @@ public class PlayerPanel : MonoBehaviour
         float mousePosY = Input.mousePosition.y - (_dragStartPos.y - _startY);
         _panel.anchoredPosition = new Vector3(0, mousePosY, 0);
 
-        // Show the correct icon based on the drag direction
-        _shieldIcon.alpha = _panel.localPosition.y / -_maxDrag;
-        _specialIcon.alpha = _panel.localPosition.y / _maxDrag;
-
         // Clamp the panel to the maxDrag
-        if (_panel.localPosition.y > _maxDrag)
+        if (_panel.anchoredPosition.y > _maxDrag + _startY)
         {
-            _panel.anchoredPosition = new Vector3(0, _maxDrag, 0);
+            _panel.anchoredPosition = new Vector3(0, _maxDrag + _startY, 0);
         }
-        else if (_panel.localPosition.y < -_maxDrag)
+        else if (_panel.anchoredPosition.y < -_maxDrag + _startY)
         {
-            _panel.anchoredPosition = new Vector3(0, -_maxDrag, 0);
+            _panel.anchoredPosition = new Vector3(0, -_maxDrag + _startY, 0);
         }
+
+        // Show the correct icon based on the drag direction
+        _specialIcon.alpha = (_panel.anchoredPosition.y - _startY) / _maxDrag;
+        _shieldIcon.alpha = (_panel.anchoredPosition.y - _startY) / -_maxDrag;
 
         // TODO: Smooth stop the panel instead of stopping it instantly
     }
@@ -132,12 +137,12 @@ public class PlayerPanel : MonoBehaviour
         _dragStartPos = Vector2.zero;
 
         _specialIcon.gameObject.SetActive(false);
-        if (_panel.anchoredPosition.y < 0)
+        if (_panel.anchoredPosition.y < _startY)
         {
             _shieldIcon.alpha = 1;
             UseDefend();
         }
-        else if (_panel.anchoredPosition.y > 0)
+        else if (_panel.anchoredPosition.y > _startY)
         {
             _shieldIcon.gameObject.SetActive(false);
             UseSpecial();

@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private PlayerPanel _panelPrefab;
+    [SerializeField] private float yOffset = 20;
+    private List<PlayerPanel> _panels;
+
+    public Character[] testChars;
+
+    private void Start()
     {
-        
+        Initialize(testChars);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Initialize(Character[] character)
     {
-        
+        _panels = new List<PlayerPanel>();
+        foreach (Character c in character)
+        {
+            GameObject panel = Instantiate(_panelPrefab.gameObject, transform);
+            PlayerPanel playerPanel = panel.GetComponent<PlayerPanel>();
+
+            playerPanel.SetPosition(_panels.Count * yOffset);
+            playerPanel.SetImageCover(c.panelPortraitSprite);
+            playerPanel.SetBackgroundTint(c.panelBackgroundTint);
+
+            panel.name = "panel_" + c.name;
+            _panels.Add(playerPanel);
+        }
     }
 }
