@@ -21,6 +21,8 @@ public class Character
     private int _specialCooldown;
     public int SpecialCooldown => _specialCooldown;
 
+    private StatusEffect[] _activeEffects;
+
     public Character(CharacterData character)
     {
         _characterData = character;

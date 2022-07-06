@@ -287,11 +287,12 @@ MonoBehaviour:
   _canvasGroup: {fileID: 3720241896249612630}
   _backImage: {fileID: 2452320920952992685}
   _charImage: {fileID: 31337151594830721}
+  _enabledHSV: 1
+  _disabledHSV: 0.25
   _shieldIcon: {fileID: 1562471600560097056}
   _specialIcon: {fileID: 5133851123179992089}
   _maxDrag: 20
   _mixHoldForInfo: 1
-  _maxHoldForAttack: 0.1
 --- !u!1 &2745281235543529928
 GameObject:
   m_ObjectHideFlags: 0

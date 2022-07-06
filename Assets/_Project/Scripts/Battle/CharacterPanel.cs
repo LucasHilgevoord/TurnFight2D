@@ -25,6 +25,7 @@ public class CharacterPanel : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Image _backImage;
     [SerializeField] private Image _charImage;
+    [SerializeField] private float _enabledHSV, _disabledHSV = 1;
 
     [Header("Icons")]
     [SerializeField] private CanvasGroup _shieldIcon;
@@ -67,7 +68,7 @@ public class CharacterPanel : MonoBehaviour
         _canvasGroup.interactable = true;
 
         // Reset the colors
-        Color c = Color.HSVToRGB(0, 0, 1, true);
+        Color c = Color.HSVToRGB(0, 0, _enabledHSV, true);
         _backImage.color = c;
         _charImage.color = c;
     }
@@ -78,7 +79,7 @@ public class CharacterPanel : MonoBehaviour
         _canvasGroup.interactable = false;
         
         // Disable the colors
-        Color c = Color.HSVToRGB(0, 0, 0.25f, true);
+        Color c = Color.HSVToRGB(0, 0, _disabledHSV, true);
         _backImage.color = c;
         _charImage.color = c;
     }

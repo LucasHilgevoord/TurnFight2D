@@ -12,4 +12,7 @@ public class SpecialAbilityData : ScriptableObject
 
     /// <summary> How many turns should be passed before able to use this character's special. </summary>
     public int turnCooldown;
+
+    /// <summary> Effects that will be applied once this ability has been used </summary>
+    public StatusEffect[] _statusEffects;
 }
