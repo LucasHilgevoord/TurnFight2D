@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : TeamManager
 {
-    [SerializeField] private Enemy[] _characters;
-    [SerializeField] private float rowScalingOffset = 0.25f;
-    [SerializeField] private float _maxOffsetX = 200;
-    
-    private Vector3[] _positions;
-    private float[] _scaling;
-    private int _currentFocusIndex;
+    public List<FieldEnemy> FieldEnemies => _fieldEnemies;
+    private List<FieldEnemy> _fieldEnemies;
 
-    private void Start()
-    {
-        Initialize(_characters);
-    }
+    [SerializeField] private FieldEnemy _enemyPrefab;
+    //[SerializeField] private float rowScalingOffset = 0.25f;
+    //[SerializeField] private float _maxOffsetX = 200;
+    
+    //private Vector3[] _positions;
+    //private float[] _scaling;
 
     private void Update()
     {
@@ -26,9 +23,19 @@ public class EnemyManager : MonoBehaviour
             FocusPrevious();
     }
 
-    private void Initialize(Enemy[] characters)
+    internal override void Initialize(CharacterData[] characterData)
     {
-        _characters = characters;
+        base.Initialize(characterData);
+        _fieldEnemies = new List<FieldEnemy>();
+
+        foreach (Character character in _characters)
+        {
+            // Initialize a panel for the character
+            FieldEnemy fieldEnemy = Instantiate(_enemyPrefab, transform);
+            fieldEnemy.Initialize(character);
+            _fieldEnemies.Add(fieldEnemy);
+            
+        }  
         _currentFocusIndex = 0;
     }
 
@@ -37,11 +44,11 @@ public class EnemyManager : MonoBehaviour
         Debug.Log("Focus prev");
 
         // Unfocus the previous one
-        _characters[_currentFocusIndex].Unfocus();
+        _fieldEnemies[_currentFocusIndex].Unfocus();
 
         // Go to the next one
-        _currentFocusIndex = _currentFocusIndex >= _characters.Length - 1 ? 0 : _currentFocusIndex + 1;
-        _characters[_currentFocusIndex].Focus();
+        _currentFocusIndex = _currentFocusIndex >= _fieldEnemies.Count ? 0 : _currentFocusIndex + 1;
+        _fieldEnemies[_currentFocusIndex].Focus();
     }
 
     private void FocusPrevious()
@@ -49,19 +56,19 @@ public class EnemyManager : MonoBehaviour
         Debug.Log("Focus prev");
 
         // Unfocus the previous one
-        _characters[_currentFocusIndex].Unfocus();
+        _fieldEnemies[_currentFocusIndex].Unfocus();
 
         // Go to the previous one
-        _currentFocusIndex = _currentFocusIndex <= 0 ? _characters.Length - 1 : _currentFocusIndex - 1;
-        _characters[_currentFocusIndex].Focus();
+        _currentFocusIndex = _currentFocusIndex <= 0 ? _fieldEnemies.Count : _currentFocusIndex - 1;
+        _fieldEnemies[_currentFocusIndex].Focus();
     }
 
-    private void FocusSpecific(Enemy character)
+    private void FocusSpecific(FieldEnemy character)
     {
         int index = -1;
-        for (int i = 0; i < _characters.Length - 1; i++)
+        for (int i = 0; i < _fieldEnemies.Count; i++)
         {
-            if (character == _characters[i]) 
+            if (character == _fieldEnemies[i]) 
             { 
                 index = i; 
                 break; 

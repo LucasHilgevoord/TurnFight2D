@@ -9,9 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c0f47610f0e7a48946ed7f82ba48e1, type: 3}
+  m_Script: {fileID: 11500000, guid: d06461a4ea08e4247828a385d99c2d71, type: 3}
   m_Name: Shapeshift
   m_EditorClassIdentifier: 
   abilityName: Shapeshift
   abilityDesc: Increase Attack Power by {0}% and take {1}% less damage for 3 turns.
-  turnCooldown: 3
+  turnCooldown: 0
+  isSpecial: 1
+  statusEffects: []
+  abilityEffects:
+  - effectOperator: 3
+    effectTarget: 3
+    amount: 234
+    effectType: 0

@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 475082580424455203}
   - component: {fileID: 1562471600560097056}
   m_Layer: 5
-  m_Name: Shield
+  m_Name: shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,8 +289,8 @@ MonoBehaviour:
   _charImage: {fileID: 31337151594830721}
   _enabledHSV: 1
   _disabledHSV: 0.25
-  _shieldIcon: {fileID: 1562471600560097056}
-  _specialIcon: {fileID: 5133851123179992089}
+  _swipeDownIcon: {fileID: 1562471600560097056}
+  _swipeUpIcon: {fileID: 5133851123179992089}
   _maxDrag: 20
   _mixHoldForInfo: 1
 --- !u!1 &2745281235543529928
@@ -570,6 +570,102 @@ MonoBehaviour:
   m_EffectColor: {r: 0.468, g: 0.2808, b: 0, a: 0.7019608}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1 &5956168965890258521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7098189673856973798}
+  - component: {fileID: 2065290525321733624}
+  - component: {fileID: 4290492292414939294}
+  - component: {fileID: 5644018127521384102}
+  m_Layer: 5
+  m_Name: health
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7098189673856973798
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956168965890258521}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2187619742493491195}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -82.5}
+  m_SizeDelta: {x: 80, y: 35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2065290525321733624
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956168965890258521}
+  m_CullTransparentMesh: 1
+--- !u!114 &4290492292414939294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956168965890258521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 7e7e5b56011088b42ad6c0080e5e8440, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5644018127521384102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956168965890258521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb5f20ecb5487e4c9940683a4b276f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _background: {fileID: 4290492292414939294}
+  _backgroundTint: {r: 0, g: 0, b: 0, a: 0}
+  _barPrefab: {fileID: 1189638905438829712, guid: 380c1ea6dcdc2454ab0d26b1ffac7c46, type: 3}
+  _barCount: 1
+  _barColors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  _barMargin: {x: 0, y: 0}
 --- !u!1 &6259900241274815016
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,6 +696,7 @@ RectTransform:
   m_Children:
   - {fileID: 3017835001048520934}
   - {fileID: 734252200571025298}
+  - {fileID: 7098189673856973798}
   - {fileID: 3436696725614315026}
   m_Father: {fileID: 6324058085721761086}
   m_RootOrder: 0
@@ -697,7 +794,7 @@ GameObject:
   - component: {fileID: 2204317534329646368}
   - component: {fileID: 8519531504034279872}
   m_Layer: 5
-  m_Name: Health
+  m_Name: health_amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -716,7 +813,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2187619742493491195}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -831,7 +928,7 @@ GameObject:
   - component: {fileID: 4544720059718347521}
   - component: {fileID: 5133851123179992089}
   m_Layer: 5
-  m_Name: Special
+  m_Name: special
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

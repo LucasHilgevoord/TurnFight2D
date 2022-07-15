@@ -15,8 +15,10 @@ MonoBehaviour:
   characterName: Jaketto
   characterDesc: 
   damageType: 0
-  damageAmount: 0
   maxHealth: 1000
-  specialAbility: {fileID: 11400000, guid: afa4d6660d053ba42bd55fb1e913c789, type: 2}
+  maxShield: 100
+  specialAbility: {fileID: 11400000, guid: 75065dbfaa6387347bb575608037856e, type: 2}
+  primaryAbility: {fileID: 11400000, guid: 313033d7e81fb294fa273dc43c90ade4, type: 2}
   panelPortraitSprite: {fileID: 21300000, guid: 4cc98fcb1ac93a34789b8f92de8de31a, type: 3}
   panelBackgroundTint: {r: 0.7607843, g: 0.25490198, b: 1, a: 1}
+  battleSprite: {fileID: 21300000, guid: 4f267139d30112140a11afc62c629bba, type: 3}

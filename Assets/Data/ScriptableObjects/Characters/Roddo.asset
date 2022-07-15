@@ -15,8 +15,10 @@ MonoBehaviour:
   characterName: Roddo
   characterDesc: 
   damageType: 0
-  damageAmount: 0
   maxHealth: 1000
-  specialAbility: {fileID: 11400000, guid: dd5d8d061db80e44e9a59d1a57c6ba44, type: 2}
+  maxShield: 100
+  specialAbility: {fileID: 11400000, guid: 596edec122390074d860291f825c9f06, type: 2}
+  primaryAbility: {fileID: 11400000, guid: c6aa0d66cee15454698219d72f0bdc0f, type: 2}
   panelPortraitSprite: {fileID: 21300000, guid: 82a65d048b438084ab936357ec739fa1, type: 3}
   panelBackgroundTint: {r: 0.3529412, g: 0.20392157, b: 0.12941177, a: 1}
+  battleSprite: {fileID: 21300000, guid: 4f267139d30112140a11afc62c629bba, type: 3}

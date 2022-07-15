@@ -15,8 +15,10 @@ MonoBehaviour:
   characterName: Kizuato
   characterDesc: 
   damageType: 0
-  damageAmount: 0
   maxHealth: 1000
-  specialAbility: {fileID: 11400000, guid: 933fabc250a1e2544958e0fef093f515, type: 2}
+  maxShield: 100
+  specialAbility: {fileID: 11400000, guid: 7cb3a632410fcee419192a042b229a70, type: 2}
+  primaryAbility: {fileID: 11400000, guid: c6aa0d66cee15454698219d72f0bdc0f, type: 2}
   panelPortraitSprite: {fileID: 21300000, guid: efce995d0bc39104997cfa30e1f13032, type: 3}
   panelBackgroundTint: {r: 0.34509805, g: 0.3137255, b: 0.6666667, a: 1}
+  battleSprite: {fileID: 21300000, guid: 4f267139d30112140a11afc62c629bba, type: 3}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f8c556f4e79bf4593bd9a0bf218fbb, type: 3}
+  m_Name: Test Dummy
+  m_EditorClassIdentifier: 
+  characterName: Test Dummy
+  characterDesc: A test dummy to train on
+  damageType: 0
+  maxHealth: 1000
+  maxShield: 100
+  specialAbility: {fileID: 11400000, guid: c6aa0d66cee15454698219d72f0bdc0f, type: 2}
+  primaryAbility: {fileID: 11400000, guid: c6aa0d66cee15454698219d72f0bdc0f, type: 2}
+  panelPortraitSprite: {fileID: 21300000, guid: 259ce9f38fea35d4080c182b19dc3983, type: 3}
+  panelBackgroundTint: {r: 1, g: 1, b: 1, a: 1}
+  battleSprite: {fileID: 21300000, guid: 4f267139d30112140a11afc62c629bba, type: 3}

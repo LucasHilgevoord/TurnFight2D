@@ -1,35 +1,28 @@
-using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PlayerActions
+public enum PanelInput
 {
-    Attack,
-    Special,
-    Defend,
-    Info
+    Click,
+    SwipeUp,
+    SwipeDown,
+    Hold
 }
 
 public class CharacterPanel : MonoBehaviour
 {
-    public event Action<PlayerActions, CharacterPanel> ActionPerformed;
-
     private bool _isEnabled = true;
     private float _startY = 0;
 
     [Header("Panel components")]
     [SerializeField] private RectTransform _panel;
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private Image _backImage;
-    [SerializeField] private Image _charImage;
+    [SerializeField] private Image _backImage, _charImage;
     [SerializeField] private float _enabledHSV, _disabledHSV = 1;
-
-    [Header("Icons")]
-    [SerializeField] private CanvasGroup _shieldIcon;
-    [SerializeField] private CanvasGroup _specialIcon;
+    [SerializeField] private CanvasGroup _swipeDownIcon, _swipeUpIcon;
 
     [Header("Character")]
     private bool _infoVisible;
@@ -40,7 +33,7 @@ public class CharacterPanel : MonoBehaviour
     [SerializeField] private float _maxDrag = 20;
     private Vector3 _dragStartPos;
     private bool _onDrag;
-
+    
     private bool _onPointerDown;
     private float _pointDownTimer;
     [SerializeField] private float _mixHoldForInfo = 1;
@@ -105,11 +98,11 @@ public class CharacterPanel : MonoBehaviour
         // Enable the icons so we can show them if the user is dragging the panel
         if (!_onDrag)
         {
-            _shieldIcon.gameObject.SetActive(true);
-            _shieldIcon.alpha = 0;
+            _swipeDownIcon.gameObject.SetActive(true);
+            _swipeDownIcon.alpha = 0;
 
-            _specialIcon.gameObject.SetActive(true);
-            _specialIcon.alpha = 0;
+            _swipeUpIcon.gameObject.SetActive(true);
+            _swipeUpIcon.alpha = 0;
         }
 
         _onDrag = true;
@@ -132,8 +125,8 @@ public class CharacterPanel : MonoBehaviour
         }
 
         // Show the correct icon based on the drag direction
-        _specialIcon.alpha = (_panel.anchoredPosition.y - _startY) / _maxDrag;
-        _shieldIcon.alpha = (_panel.anchoredPosition.y - _startY) / -_maxDrag;
+        _swipeUpIcon.alpha = (_panel.anchoredPosition.y - _startY) / _maxDrag;
+        _swipeDownIcon.alpha = (_panel.anchoredPosition.y - _startY) / -_maxDrag;
 
         // TODO: Smooth stop the panel instead of stopping it instantly
     }
@@ -146,16 +139,16 @@ public class CharacterPanel : MonoBehaviour
         _onDrag = false;
         _dragStartPos = Vector2.zero;
 
-        _specialIcon.gameObject.SetActive(false);
+        _swipeUpIcon.gameObject.SetActive(false);
         if (_panel.anchoredPosition.y < _startY)
         {
-            _shieldIcon.alpha = 1;
-            UseAction(PlayerActions.Defend);
+            _swipeDownIcon.alpha = 1;
+            UseAction(PanelInput.SwipeDown);
         }
         else if (_panel.anchoredPosition.y > _startY)
         {
-            _shieldIcon.gameObject.SetActive(false);
-            UseAction(PlayerActions.Special);
+            _swipeDownIcon.gameObject.SetActive(false);
+            UseAction(PanelInput.SwipeUp);
         }
 
         // Reset position
@@ -169,7 +162,7 @@ public class CharacterPanel : MonoBehaviour
         if (_infoVisible)
             ToggleCharacterInfo(false);
         else if (_isEnabled && !_onDrag)
-            UseAction(PlayerActions.Attack);
+            UseAction(PanelInput.Click);
     }
     
     public void OnPointerDown() 
@@ -178,10 +171,7 @@ public class CharacterPanel : MonoBehaviour
         _pointDownTimer = Time.time;
     }
 
-    private void UseAction(PlayerActions action)
-    {
-        ActionPerformed?.Invoke(action, this);
-    }
+    private void UseAction(PanelInput action) { SignalBus.Broadcast(new EvPanelAction(action, this)); }
     
     internal void EndAction()
     {
@@ -190,7 +180,7 @@ public class CharacterPanel : MonoBehaviour
 
     private void ToggleCharacterInfo(bool show)
     {
-        UseAction(PlayerActions.Info);
+        UseAction(PanelInput.Hold);
         _infoVisible = show;
     }
 }

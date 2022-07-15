@@ -3,88 +3,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : TeamManager
 {
     [SerializeField] private CharacterPanel _panelPrefab;
     [SerializeField] private float yOffset = 20;
     private List<CharacterPanel> _panels;
 
-    public CharacterData[] testChars;
-
-    private void Start()
-    {
-        Initialize(testChars);
-    }
-
     private void OnDisable()
     {
-        foreach (CharacterPanel panel in _panels)
-        {
-            // Stop listening to all the callbacks of the panel
-            panel.ActionPerformed -= OnActionPerformed;
-        }
+        SignalBus.Unsubscribe<EvPanelAction>(OnActionReceived);
     }
 
-    private void Initialize(CharacterData[] characterData)
+    internal override void Initialize(CharacterData[] characterData)
     {
+        base.Initialize(characterData);
         _panels = new List<CharacterPanel>();
-        foreach (CharacterData data in characterData)
-        {
-            // Create a new controller for each character in the team
-            Character character = new Character(data);
 
+        // Flip the array so the first one will be displayed on the left
+        //Array.Reverse(characterData);
+        
+        foreach (Character character in _characters)
+        {
             // Initialize a panel for the character
-            GameObject panel = Instantiate(_panelPrefab.gameObject, transform);
-            CharacterPanel playerPanel = panel.GetComponent<CharacterPanel>();
+            CharacterPanel playerPanel = Instantiate(_panelPrefab, transform);
             playerPanel.Initialize(character, _panels.Count * yOffset);
             _panels.Add(playerPanel);
-
-            // Start listening to all the callbacks of the panel
-            playerPanel.ActionPerformed += OnActionPerformed;
         }
+
+        SignalBus.Subscribe<EvPanelAction>(OnActionReceived);
     }
 
-    private void OnActionPerformed(PlayerActions action, CharacterPanel panel)
+    private void OnActionReceived(EvPanelAction signal)
     {
-        Debug.Log("Character: " + panel.Character.Data.name + ", performed action: " + action);
-
-        switch (action)
+        Debug.Log("Character: " + signal.panel.Character.Data.name + ", performed action: " + signal.action);
+        Character c = signal.panel.Character;
+        switch (signal.action)
         {
-            case PlayerActions.Attack:
-                OnAttack();
-                panel.EndAction();
+            case PanelInput.Click:
+                OnAttack(c);
+                signal.panel.EndAction();
                 break;
-            case PlayerActions.Special:
-                if (panel.Character.SpecialCooldown == 0)
+            case PanelInput.SwipeUp:
+                if (c.SpecialCooldown == 0)
                 {
-                    OnSpecial();
-                    panel.EndAction();
+                    OnSpecial(c);
+                    signal.panel.EndAction();
                 }
                 break;
-            case PlayerActions.Defend:
-                OnDefend();
-                panel.EndAction();
+            case PanelInput.SwipeDown:
+                OnDefend(c);
+                signal.panel.EndAction();
                 break;
-            case PlayerActions.Info:
-                OnInfo(panel.Character);
+            case PanelInput.Hold:
+                OnInfo(signal.panel.Character);
                 break;
             default:
                 break;
         }
     }
 
-    private void OnAttack()
+    private void OnAttack(Character c)
     {
-        
+        SignalBus.Broadcast(new EvPlayerAbility(c.Data.primaryAbility, c));
     }
 
-    private void OnSpecial()
+    private void OnSpecial(Character c)
     {
+        SignalBus.Broadcast(new EvPlayerAbility(c.Data.specialAbility, c));
     }
 
-    private void OnDefend()
+    private void OnDefend(Character c)
     {
-        
+        c.IsDefending = true;
     }
 
     public InfoHandler infoTest;

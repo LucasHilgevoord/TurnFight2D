@@ -11,9 +11,9 @@ public class InfoHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _cooldown;
     private bool _isOpen;
 
-    private SpecialAbilityData _curData;
+    private AbilityData _curData;
 
-    internal void UpdateInfo(SpecialAbilityData data)
+    internal void UpdateInfo(AbilityData data)
     {
         if (_curData == data) return;
         _curData = data;

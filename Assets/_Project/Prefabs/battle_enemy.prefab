@@ -74,6 +74,7 @@ MonoBehaviour:
   _characterImage: {fileID: 655773741313394631}
   _focussedHSV: 1
   _unfocussedHSV: 0.25
+  _healthBar: {fileID: 0}
 --- !u!1 &655773741313394629
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 259ce9f38fea35d4080c182b19dc3983, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f267139d30112140a11afc62c629bba, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
