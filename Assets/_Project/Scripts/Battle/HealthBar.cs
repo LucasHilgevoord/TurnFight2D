@@ -47,4 +47,12 @@ public class HealthBar : MonoBehaviour
             _bars.Add(img);
         }
     }
+
+    internal void SetBar(float[] values)
+    {
+        for (int i = 0; i < _bars.Count; i++)
+        {
+            _bars[i].fillAmount = values[i];
+        }
+    }
 }

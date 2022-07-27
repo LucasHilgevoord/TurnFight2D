@@ -24,3 +24,13 @@ public struct EvPlayerAbility
     }
 }
 
+public struct EvEnemyFocusChanged
+{
+    public Character focus;
+
+    public EvEnemyFocusChanged(Character focus)
+    {
+        this.focus = focus;
+    }
+}
+

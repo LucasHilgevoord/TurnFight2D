@@ -35,12 +35,19 @@ public class BattleManager : MonoBehaviour
 
         // Initialize the battle
         _enemyManager.Initialize(_battleData.enemies);
+        SignalBus.Subscribe<EvEnemyFocusChanged>(OnEnemyFocusChanged);
 
         // Initialize the player team
         _playerManager.Initialize(_testTeam);
         
         // Initialize healthbars for each enemy
         _healthManager.Initialize(_battleData.enemies);
+        _healthManager.ChangeFocussedBar(_enemyManager.CurrentFoccussed.Character);
+    }
+
+    private void OnEnemyFocusChanged(EvEnemyFocusChanged signal)
+    {
+        throw new NotImplementedException();
     }
 
     /// <summary>

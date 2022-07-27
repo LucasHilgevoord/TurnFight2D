@@ -7,6 +7,7 @@ public class EnemyManager : TeamManager
     public List<FieldEnemy> FieldEnemies => _fieldEnemies;
     private List<FieldEnemy> _fieldEnemies;
 
+    public FieldEnemy CurrentFoccussed { get { return _fieldEnemies[_currentFocusIndex]; } }
     [SerializeField] private FieldEnemy _enemyPrefab;
     //[SerializeField] private float rowScalingOffset = 0.25f;
     //[SerializeField] private float _maxOffsetX = 200;
@@ -34,7 +35,6 @@ public class EnemyManager : TeamManager
             FieldEnemy fieldEnemy = Instantiate(_enemyPrefab, transform);
             fieldEnemy.Initialize(character);
             _fieldEnemies.Add(fieldEnemy);
-            
         }  
         _currentFocusIndex = 0;
     }
@@ -48,7 +48,9 @@ public class EnemyManager : TeamManager
 
         // Go to the next one
         _currentFocusIndex = _currentFocusIndex >= _fieldEnemies.Count ? 0 : _currentFocusIndex + 1;
-        _fieldEnemies[_currentFocusIndex].Focus();
+        CurrentFoccussed.Focus();
+
+        SignalBus.Broadcast(new EvEnemyFocusChanged(CurrentFoccussed.Character));
     }
 
     private void FocusPrevious()
@@ -60,7 +62,9 @@ public class EnemyManager : TeamManager
 
         // Go to the previous one
         _currentFocusIndex = _currentFocusIndex <= 0 ? _fieldEnemies.Count : _currentFocusIndex - 1;
-        _fieldEnemies[_currentFocusIndex].Focus();
+        CurrentFoccussed.Focus();
+        
+        SignalBus.Broadcast(new EvEnemyFocusChanged(CurrentFoccussed.Character));
     }
 
     private void FocusSpecific(FieldEnemy character)
@@ -86,7 +90,7 @@ public class EnemyManager : TeamManager
 
     private void FocusSpecific(float index)
     {
-
+        
     }
 
     /// <summary>

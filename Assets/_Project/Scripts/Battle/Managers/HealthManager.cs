@@ -19,4 +19,11 @@ public class HealthManager : MonoBehaviour
             HealthBar healthBar = Instantiate(_smallHealthBarPrefab, _teamHealthParent.transform);
         }
     }
+
+    internal void ChangeFocussedBar(Character character)
+    {
+        float health = character.CurrentHealth / character.Data.maxHealth;
+        float shield = character.CurrentShield / character.Data.maxShield;
+        _focussedHealthBar.SetBar(new float[] { health, shield});
+    }
 }

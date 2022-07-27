@@ -12,8 +12,6 @@ public class FieldEnemy : MonoBehaviour
     public Character Character => _character;
     private Character _character;
 
-    [SerializeField] private HealthBar _healthBar;
-
     internal void Initialize(Character character)
     {
         // Set the character
