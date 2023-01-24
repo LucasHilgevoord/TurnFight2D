@@ -9,11 +9,6 @@ public class EnemyManager : TeamManager
 
     public FieldEnemy CurrentFoccussed { get { return _fieldEnemies[_currentFocusIndex]; } }
     [SerializeField] private FieldEnemy _enemyPrefab;
-    //[SerializeField] private float rowScalingOffset = 0.25f;
-    //[SerializeField] private float _maxOffsetX = 200;
-    
-    //private Vector3[] _positions;
-    //private float[] _scaling;
 
     private void Update()
     {

@@ -8,6 +8,7 @@ public class PlayerManager : TeamManager
     [SerializeField] private CharacterPanel _panelPrefab;
     [SerializeField] private float yOffset = 20;
     private List<CharacterPanel> _panels;
+    private int _usedAbility = 0;
 
     private void OnDisable()
     {
@@ -41,24 +42,44 @@ public class PlayerManager : TeamManager
         {
             case PanelInput.Click:
                 OnAttack(c);
-                signal.panel.EndAction();
+                EndAction(signal.panel);
                 break;
             case PanelInput.SwipeUp:
                 if (c.SpecialCooldown == 0)
                 {
                     OnSpecial(c);
-                    signal.panel.EndAction();
+                    EndAction(signal.panel);
                 }
                 break;
             case PanelInput.SwipeDown:
                 OnDefend(c);
-                signal.panel.EndAction();
+                EndAction(signal.panel);
                 break;
             case PanelInput.Hold:
                 OnInfo(signal.panel.Character);
                 break;
             default:
                 break;
+        }
+    }
+
+    internal void EnablePanels()
+    {
+        foreach (CharacterPanel panel in _panels)
+        {
+            panel.EnablePanel();
+        }
+    }
+
+    private void EndAction(CharacterPanel panel)
+    {
+        panel.EndAction();
+        _usedAbility++;
+
+        if (_usedAbility == _characters.Count)
+        {
+            _usedAbility = 0;
+            SignalBus.Broadcast(new EvPlayerTurnFinished());
         }
     }
 

@@ -14,6 +14,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private HealthManager _healthManager;
+    [SerializeField] private ProgressionManager _progressionManager;
 
     [Header("Handlers")]
     [SerializeField] private SpecialHandler specialHandler;
@@ -21,6 +22,7 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         SignalBus.Subscribe<EvPlayerAbility>(OnPlayerAbility);
+        SignalBus.Subscribe<EvPlayerTurnFinished>(OnPlayerTurnFinished);
     }
 
     private void Start()
@@ -41,7 +43,7 @@ public class BattleManager : MonoBehaviour
         _playerManager.Initialize(_testTeam);
         
         // Initialize healthbars for each enemy
-        _healthManager.Initialize(_battleData.enemies);
+        _healthManager.Initialize(_enemyManager.Characters.ToArray());
         _healthManager.ChangeFocussedBar(_enemyManager.CurrentFoccussed.Character);
     }
 
@@ -136,5 +138,27 @@ public class BattleManager : MonoBehaviour
                 int randomEnemy = UnityEngine.Random.Range(0, enemy.Characters.Count);
                 return new Character[] { enemy.Characters[randomEnemy] };
         }
+    }
+
+    private void OnPlayerTurnFinished(EvPlayerTurnFinished signal)
+    {
+        // Start Enemy turn
+        NextTurn();
+    }
+
+    /// <summary>
+    /// Method to start a new turn for the player
+    /// </summary>
+    private void NextTurn()
+    {
+        _progressionManager.NextTurn();
+        _playerManager.EnablePanels();
+        // Reenable all character panels
+    }
+
+    private void NextWave()
+    {
+        _progressionManager.NextWave();
+        // Set new enemies
     }
 }

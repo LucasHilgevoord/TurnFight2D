@@ -24,6 +24,8 @@ public struct EvPlayerAbility
     }
 }
 
+public struct EvPlayerTurnFinished { }
+
 public struct EvEnemyFocusChanged
 {
     public Character focus;

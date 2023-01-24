@@ -55,7 +55,7 @@ public class CharacterPanel : MonoBehaviour
         _panel.name = "panel_" + _character.Data.name;
     }
 
-    private void EnablePanel()
+    internal void EnablePanel()
     {
         _isEnabled = true;
         _canvasGroup.interactable = true;

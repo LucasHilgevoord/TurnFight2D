@@ -13,6 +13,30 @@ public class ProgressionManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _turnText;
     [SerializeField] private TextMeshProUGUI _turnNumberGUI;
 
-    private int _waveNubmer;
+    private int _waveNumber;
     private int _turnNumber;
+
+    private void Start()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        _waveNumber = _turnNumber = 0;
+        NextWave();
+        NextTurn();
+    }
+
+    internal void NextWave()
+    {
+        _waveNumber++;
+        _waveNumberGUI.text = _waveNumber.ToString();
+    }
+
+    internal void NextTurn()
+    {
+        _turnNumber++;
+        _turnNumberGUI.text = _turnNumber.ToString();
+    }
 }

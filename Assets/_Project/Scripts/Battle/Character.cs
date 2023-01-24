@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public enum CharacterState
 
 public class Character
 {
+    internal event Action<float> HealthUpdated;
+
     internal CharacterData Data => _characterData;
     private CharacterData _characterData;
 
@@ -66,7 +69,12 @@ public class Character
 
     public void HealSelf(int points) { UpdateHealth(_currentHealth + points); }
 
-    private void UpdateHealth(int points) { _currentHealth = Mathf.Clamp(points, 0, _maxHealth); Debug.Log("Health Updated to: " + _currentHealth); }
+    private void UpdateHealth(int points) 
+    { 
+        _currentHealth = Mathf.Clamp(points, 0, _maxHealth); 
+        Debug.Log("Health Updated to: " + _currentHealth);
+        HealthUpdated?.Invoke(_currentHealth);
+    }
 
     public void SubtractShield(int points) { UpdateShield(_currentShield - points); }
     

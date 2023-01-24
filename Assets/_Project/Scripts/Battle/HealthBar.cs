@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,54 +7,38 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    private Character _observedCharacter;
+    private float _maxValue, _currentValue;
+
     private RectTransform _backgroundRect;
     [SerializeField] private Image _background;
     [SerializeField] private Color _backgroundTint;
 
     [SerializeField] private Image _barPrefab;
-    [SerializeField] private int _barCount;
-    [SerializeField] private Color[] _barColors;
+    [SerializeField] private Color _barColor;
     [SerializeField] private Vector2 _barMargin;
-
-    private List<Image> _bars = new List<Image>();
+    [SerializeField] private float _updateSpeed = 2;
+    private Image _bar;
 
     private void Start()
     {
         _backgroundRect = _background.GetComponent<RectTransform>();
-        
-        for (int i = 0; i < _barCount; i++)
-        {
-            GameObject b = Instantiate(_barPrefab.gameObject, transform);
-            Image img = b.GetComponent<Image>();
+        _bar = Instantiate(_barPrefab, transform);
 
-            // Apply the correct scale to the bar
-            img.rectTransform.sizeDelta = _backgroundRect.sizeDelta - _barMargin;
-
-            // Set the color of the bar
-            if (i > _barColors.Length)
-            {
-                // Set a default color if there are no colors assigned
-                if (_barColors.Length == 0)
-                    img.color = Color.white;
-                else
-                {
-                    // Apply the last color assigned
-                    img.color = _barColors[_barColors.Length - 1];
-                }
-            } else
-            {
-                img.color = _barColors[i];
-            }
-
-            _bars.Add(img);
-        }
+        // Apply the correct scale to the baraaa
+        _bar.rectTransform.sizeDelta = _backgroundRect.sizeDelta - _barMargin;
+        _bar.color = _barColor;
     }
 
-    internal void SetBar(float[] values)
+    internal void InitializeBar(float maxValue, float startValue) 
     {
-        for (int i = 0; i < _bars.Count; i++)
-        {
-            _bars[i].fillAmount = values[i];
-        }
+        _maxValue = maxValue;
+        UpdateBar(startValue);
+    }
+
+    internal void UpdateBar(float value)
+    {
+        _currentValue = value;
+        _bar.DOFillAmount(_currentValue / _maxValue, _updateSpeed).SetSpeedBased().SetEase(Ease.OutSine);
     }
 }
